@@ -1,0 +1,7 @@
+# /etc/acpi/events/ac
+# Called when the user connects ac power to us
+# 
+
+event=ac_adapter ACPI0003:00 00000080 0000000*
+action=/etc/acpi/power.sh %e
+

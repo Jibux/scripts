@@ -1,0 +1,5 @@
+/mnt/data/Clés - certifs:Data/
+/mnt/data/Contacts:Data/
+/mnt/data/JBH:Data/
+/mnt/data/Mails:Data/
+/mnt/data/Téléchargement Mozzila:Data/

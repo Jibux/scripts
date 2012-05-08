@@ -1,0 +1,5 @@
+# /etc/acpi/events/brightness
+# Called when the user put the brightness up or down
+
+event=video/brightness*
+action=/etc/acpi/brightness.sh %e

@@ -1,0 +1,12 @@
+Backup begun --- dimanche 29 janvier 2012, 17:46:52 (UTC+0100) ---
+
+
+Backup finished --- dimanche 29 janvier 2012, 17:46:53 (UTC+0100) ---
+
+Backup begun --- dimanche 29 janvier 2012, 17:46:53 (UTC+0100) ---
+
+rsync: send_files failed to open "/mnt/data/Mails/Gmail/[Gmail].sbd/CORBEI~1": Input/output error (5)
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1060) [sender=3.0.7]
+
+Backup finished --- dimanche 29 janvier 2012, 18:02:33 (UTC+0100) ---
+

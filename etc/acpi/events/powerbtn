@@ -1,0 +1,10 @@
+# /etc/acpi/events/powerbtn
+# Called when the user presses the power button
+
+# Note that this script is part of the SUSPEND part of acpi-support. This is
+# not a key translation event, it is intended to perform a suspend if no
+# power management daemon is running.
+
+event=button/power PBTN
+action=/etc/acpi/shutdown.sh
+

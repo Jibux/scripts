@@ -1,0 +1,11 @@
+/home/jbh/bin:home/jbh/
+/home/jbh/Bureau:home/jbh/
+/home/jbh/Documents:home/jbh/
+/home/jbh/Modèles:home/jbh/
+/home/jbh/Public:home/jbh/
+/home/jbh/scripts:home/jbh/
+/home/jbh/.bashrc:home/jbh/
+/home/jbh/.ssh:home/jbh/
+/root/Documents:root/
+/root/.bashrc:root/
+/etc/vim/vimrc:etc/vim/

@@ -1,0 +1,6 @@
+# /etc/acpi/events/volume
+# Called when the user use volume control
+# 
+
+event=button/volume*
+action=/etc/acpi/volume.sh %e
