@@ -1,5 +1,9 @@
 #!/bin/bash
 
+/etc/acpi/globalHandle.sh $0
+[[ $? -eq 0 ]] && exit 0
+
+
 br=`cat /sys/class/backlight/acpi_video0/brightness`
 
 if [ "$2" == "BRTUP" ]

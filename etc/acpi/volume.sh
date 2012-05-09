@@ -1,5 +1,9 @@
 #!/bin/bash
 
+/etc/acpi/globalHandle.sh $0
+[[ $? -eq 0 ]] && exit 0
+
+
 action=$1
 
 current=$(amixer get Master | grep Left: | cut -d ' ' -f6)

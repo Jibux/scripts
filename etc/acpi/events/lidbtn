@@ -2,4 +2,4 @@
 # Called when the user closes or opens the lid
 
 event=button/lid LID close
-action=/etc/acpi/sleep2.sh
+action=/etc/acpi/lid2.sh

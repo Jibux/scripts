@@ -1,5 +1,9 @@
 #!/bin/bash
 
+/etc/acpi/globalHandle.sh $0
+[[ $? -eq 0 ]] && exit 0
+
+
 # Handle when the power button is pressed
 
 tmpFile=/tmp/shutdown.script

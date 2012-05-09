@@ -6,4 +6,4 @@
 # power management daemon is running.
 
 event=button[ /]sleep
-action=/etc/acpi/sleep2.sh
+action=/etc/acpi/sleepbtn2.sh

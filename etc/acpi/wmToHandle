@@ -1,0 +1,6 @@
+brightness.sh:Fluxbox,Mutter,Xfwm4
+shutdown.sh:Fluxbox,
+sleepbtn2.sh:Fluxbox,
+lid2.sh:Fluxbox,
+volume.sh:Fluxbox,Xfwm4
+
