@@ -21,11 +21,15 @@ echo "Application: $application"
 location=`whereis $application |cut -d ':' -f2`
 [ -z "$location" ] && echo "Cannot find location for $application" && exit
 
-mimetype=`mimetype $filename | cut -d ' ' -f2`
+mimetype=`mimetype "$filename" | awk '{print $NF}'`
 echo "mimetype: $mimetype"
+mimetype2=`xdg-mime query filetype "$filename" | cut -d ';' -f1`
+echo "mimetype2: $mimetype2"
 
 defApp=`xdg-mime query default $mimetype`
 echo "Default application: $defApp"
+defApp2=`xdg-mime query default $mimetype2`
+echo "Default application2: $defApp2"
 
 xdg-mime default $application.desktop $mimetype
 
