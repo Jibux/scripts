@@ -182,4 +182,4 @@ then
 fi
 done
 
-gedit $path1"Makefile" &
+#gedit $path1"Makefile" &

@@ -53,7 +53,7 @@ fi
 #fi
 
 case $action in
-	Power*) cmd="/sbin/poweroff" ;;
+	Power*) cmd="/sbin/halt" ;;
 	Reboot*) cmd="/sbin/reboot" ;;
 	Suspend*) cmd="/usr/sbin/pm-suspend" ;;
 	Logout*) 
