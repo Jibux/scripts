@@ -39,6 +39,6 @@ rsync -auv /home/jbh/Documents/Development/TOSAVE Development/
 cd /home/jbh/Documents/Development/
 for folder in `cat TOSAVE`
 do
-	echo $folder
+	tar -cvjf /home/jbh/Documents/gitSave/Development/$folder.tar.bz2 $folder
 done
 
