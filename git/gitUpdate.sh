@@ -1,5 +1,7 @@
 #!/bin/bash
 
+updateDev=0
+
 ###########
 # CONFIGS #
 ###########
@@ -32,9 +34,10 @@ rsync -auv --delete /home/jbh/scripts/ scripts/jbh/
 rsync -auv /home/jbh/Documents/gitSave/update.sh scripts/git/gitUpdate.sh
 rsync -auv /home/jbh/Documents/gitSave/sync.sh scripts/git/gitSync.sh
 
-###############
+##############
 # DEVELOPMENT #
 ###############
+[ $updateDev == 0 ] && exit 0
 rsync -auv /home/jbh/Documents/Development/TOSAVE Development/
 cd /home/jbh/Documents/Development/
 for folder in `cat TOSAVE`
