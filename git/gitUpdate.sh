@@ -1,6 +1,7 @@
 #!/bin/bash
 
-updateDev=0
+# 0 if $1 is not defined
+updateDev=${1:-0}
 
 ###########
 # CONFIGS #
@@ -37,7 +38,7 @@ rsync -auv /home/jbh/Documents/gitSave/sync.sh scripts/git/gitSync.sh
 ##############
 # DEVELOPMENT #
 ###############
-[ $updateDev == 0 ] && exit 0
+[ $updateDev != 1 ] && exit 0
 rsync -auv /home/jbh/Documents/Development/TOSAVE Development/
 cd /home/jbh/Documents/Development/
 for folder in `cat TOSAVE`
