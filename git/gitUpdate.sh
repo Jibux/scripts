@@ -40,5 +40,7 @@ cd /home/jbh/Documents/Development/
 for folder in `cat TOSAVE`
 do
 	tar -cvjf /home/jbh/Documents/gitSave/Development/$folder.tar.bz2 $folder
+	gpg2 -r Fennec --encrypt /home/jbh/Documents/gitSave/Development/$folder.tar.bz2
+	rm /home/jbh/Documents/gitSave/Development/$folder.tar.bz2
 done
 
