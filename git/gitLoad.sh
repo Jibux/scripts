@@ -65,7 +65,6 @@ sudo rsync -uv $path/config/usr/share/moc/themes/custom_theme /usr/share/moc/the
 ###########
 # SCRIPTS #
 ###########
-mkdir $home/Documents/gitSave
 #rsync -auv $path/scripts/etc/acpi/ /etc/acpi/
 #rsync -auv $path/scripts/root/ /scripts/
 #rsync -auv $path/scripts/jbh/ $home/scripts/
