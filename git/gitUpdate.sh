@@ -36,6 +36,7 @@ rsync -auv --delete /scripts/ scripts/root/
 rsync -auv --delete /home/jbh/scripts/ scripts/jbh/
 rsync -auv /home/jbh/Documents/gitSave/update.sh scripts/git/gitUpdate.sh
 rsync -auv /home/jbh/Documents/gitSave/sync.sh scripts/git/gitSync.sh
+rsync -auv /home/jbh/Documents/gitSave/load.sh scripts/git/gitLoad.sh
 
 ##############
 # DEVELOPMENT #
