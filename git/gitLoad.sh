@@ -10,7 +10,7 @@
 updateDev=${1:-0}
 
 home=/home/jbh
-path=$home/Documents
+path=$home/Documents/gitSave
 
 
 debTest=`which apt-get`
