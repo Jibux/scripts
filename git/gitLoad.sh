@@ -17,16 +17,18 @@ debTest=`which apt-get`
 if [ -z "$debTest" ]
 then
 	debian=0
+	vimPath=/etc/vimrc
 	echo "It is not a debian"
 else
 	debian=1
+	vimPath=/etc/vim/vimrc
 	echo "It is a debian"
 fi
 
 #########################
 # BACKUP ORIGINAL FILES #
 #########################
-for file in $home/.bashrc $home/.fluxbox/keys $home/.fluxbox/overlay /etc/bash.bashrc /etc/vimrc /etc/screenrc
+for file in $home/.bashrc $home/.fluxbox/keys $home/.fluxbox/overlay /etc/bash.bashrc $vimPath /etc/screenrc
 do
 	[[ -f "$file" && ! -f "$file.old" ]] && sudo rsync -a "$file" "$file.old"
 done
@@ -48,12 +50,7 @@ rsync -auv $path/config/UTILES $home/
 
 sudo rsync -uv $path/config/etc/bash.bashrc /etc/
 sudo rsync -uv $path/config/etc/DIR_COLORS /etc/
-if [[ $debian -eq 1 ]]
-then
-	sudo rsync -uv $path/config/etc/vimrc /etc/vim/
-else
-	sudo rsync -uv $path/config/etc/vimrc /etc/
-fi
+sudo rsync -uv $path/config/etc/vimrc $vimPath
 sudo rsync -uv $path/config/etc/screenrc /etc/
 #sudo rsync -uv $path/config/etc/rc.d/*custom /etc/rc.d/
 #sudo rsync -uv $path/config/etc/rc.conf /etc/
