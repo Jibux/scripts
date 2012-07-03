@@ -9,6 +9,8 @@ updateDev=${1:-0}
 rsync -auv /home/jbh/.Xdefaults config/
 rsync -auv /home/jbh/.xsession config/
 rsync -auv /home/jbh/.xinitrc config/
+rsync -auv /home/jbh/.fluxbox/keys config/.fluxbox/
+rsync -auv /home/jbh/.fluxbox/overlay config/.fluxbox/
 rsync -auv /home/jbh/.bashrc config/
 rsync -auv /home/jbh/.bash_profile config/
 rsync -auv /home/jbh/.local/share/applications/defaults.list config/.local/share/applications/
