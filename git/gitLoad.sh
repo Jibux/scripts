@@ -28,7 +28,7 @@ fi
 #########################
 # BACKUP ORIGINAL FILES #
 #########################
-for file in $home/.bashrc $home/.fluxbox/keys $home/.fluxbox/overlay /etc/bash.bashrc $vimPath /etc/screenrc
+for file in $home/.bashrc /root/.bashrc $home/.fluxbox/keys $home/.fluxbox/overlay /etc/bash.bashrc $vimPath /etc/screenrc
 do
 	[[ -f "$file" && ! -f "$file.old" ]] && sudo rsync -a "$file" "$file.old"
 done
@@ -42,6 +42,7 @@ rsync -auv $path/config/.xinitrc $home/
 rsync -auv $path/config/.fluxbox/keys $home/.fluxbox/
 rsync -auv $path/config/.fluxbox/overlay $home/.fluxbox/
 rsync -auv $path/config/.bashrc $home/
+rsync -uv $path/config/.bashrc /root/
 #rsync -auv $path/config/.bash_profile $home/
 mkdir -p $home/.local/share/applications
 rsync -auv $path/config/.local/share/applications/defaults.list $home/.local/share/applications/
