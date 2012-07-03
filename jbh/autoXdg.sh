@@ -18,7 +18,7 @@ function usage {
 echo "Filename: $filename"
 echo "Application: $application"
 
-location=`whereis $application |cut -d ':' -f2`
+location=`which $application`
 [ -z "$location" ] && echo "Cannot find location for $application" && exit
 
 mimetype=`mimetype "$filename" | awk '{print $NF}'`

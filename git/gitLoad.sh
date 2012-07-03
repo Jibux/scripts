@@ -1,10 +1,35 @@
 #!/bin/bash
 
+#############################################################
+#                                                           #
+# Require xorg fluxbox slim rxvt-unicode xdg vim screen moc #
+#                                                           #
+#############################################################
+
 # 0 if $1 is not defined
 updateDev=${1:-0}
 
 home=/home/jbh
 path=$home/Documents
+
+
+debTest=`which apt-get`
+if [ -z "$debTest" ]
+then
+	debian=0
+	echo "It is not a debian"
+else
+	debian=1
+	echo "It is a debian"
+fi
+
+#########################
+# BACKUP ORIGINAL FILES #
+#########################
+for file in $home/.bashrc $home/.fluxbox/keys $home/.fluxbox/overlay /etc/bash.bashrc /etc/vimrc /etc/screenrc
+do
+	[[ -f "$file" && ! -f "$file.old" ]] && sudo rsync -a "$file" "$file.old"
+done
 
 ###########
 # CONFIGS #
@@ -15,28 +40,34 @@ rsync -auv $path/config/.xinitrc $home/
 rsync -auv $path/config/.fluxbox/keys $home/.fluxbox/
 rsync -auv $path/config/.fluxbox/overlay $home/.fluxbox/
 rsync -auv $path/config/.bashrc $home/
-rsync -auv $path/config/.bash_profile $home/
+#rsync -auv $path/config/.bash_profile $home/
+mkdir -p $home/.local/share/applications
 rsync -auv $path/config/.local/share/applications/defaults.list $home/.local/share/applications/
 rsync -auv $path/config/.local/share/applications/mimeapps.list $home/.local/share/applications/
-rsync -auv $path/config/UTILES config/
+rsync -auv $path/config/UTILES $home/
 
-rsync -auv $path/config/etc/bash.bashrc /etc/
-rsync -auv $path/config/etc/DIR_COLORS /etc/
-rsync -auv $path/config/etc/vimrc /etc/
-rsync -auv $path/config/etc/screenrc /etc/
-rsync -auv $path/config/etc/rc.d/*custom /etc/rc.d/
-rsync -auv $path/config/etc/rc.conf /etc/
-rsync -auv $path/config/etc/udev/rules.d/11-media-by-label-auto-mount.rules /etc/udev/rules.d/
+sudo rsync -uv $path/config/etc/bash.bashrc /etc/
+sudo rsync -uv $path/config/etc/DIR_COLORS /etc/
+if [[ $debian -eq 1 ]]
+then
+	sudo rsync -uv $path/config/etc/vimrc /etc/vim/
+else
+	sudo rsync -uv $path/config/etc/vimrc /etc/
+fi
+sudo rsync -uv $path/config/etc/screenrc /etc/
+#sudo rsync -uv $path/config/etc/rc.d/*custom /etc/rc.d/
+#sudo rsync -uv $path/config/etc/rc.conf /etc/
+sudo rsync -uv $path/config/etc/udev/rules.d/11-media-by-label-auto-mount.rules /etc/udev/rules.d/
 
-rsync -auv $path/config/usr/lib/urxvt/perl/clipboard /usr/lib/urxvt/perl/
-rsync -auv $path/config/usr/share/moc/themes/custom_theme /usr/share/moc/themes/
+sudo rsync -uv $path/config/usr/lib/urxvt/perl/clipboard /usr/lib/urxvt/perl/
+sudo rsync -uv $path/config/usr/share/moc/themes/custom_theme /usr/share/moc/themes/
 
 ###########
 # SCRIPTS #
 ###########
-rsync -auv $path/scripts/etc/acpi/ /etc/acpi/
-rsync -auv $path/scripts/root/ /scripts/
-rsync -auv $path/scripts/jbh/ $home/scripts/
+#rsync -auv $path/scripts/etc/acpi/ /etc/acpi/
+#rsync -auv $path/scripts/root/ /scripts/
+#rsync -auv $path/scripts/jbh/ $home/scripts/
 rsync -auv $path/scripts/git/gitUpdate.sh $home/Documents/gitSave/update.sh 
 rsync -auv $path/scripts/git/gitSync.sh $home/Documents/gitSave/sync.sh 
 rsync -auv $path/scripts/git/gitLoad.sh $home/Documents/gitSave/load.sh
