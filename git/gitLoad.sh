@@ -30,7 +30,7 @@ fi
 #########################
 for file in $home/.bashrc /root/.bashrc $home/.fluxbox/keys $home/.fluxbox/overlay /etc/bash.bashrc $vimPath /etc/screenrc
 do
-	[[ -f "$file" && ! -f "$file.old" ]] && sudo rsync -a "$file" "$file.old"
+	sudo [[ -f "$file" && ! -f "$file.old" ]] && sudo rsync -a "$file" "$file.old"
 done
 
 ###########
