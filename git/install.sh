@@ -32,3 +32,6 @@ git fetch upstream
 git remote set-url origin git@github.com:Jibux/config.git
 
 
+# EXTRAS
+aptitude -t squeeze-backports install iceweasel icedove libreoffice
+
