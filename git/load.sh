@@ -65,8 +65,14 @@ sudo rsync -uv $path/config/usr/share/moc/themes/custom_theme /usr/share/moc/the
 ###########
 #rsync -auv $path/scripts/etc/acpi/ /etc/acpi/
 #rsync -auv $path/scripts/root/ /scripts/
-#rsync -auv $path/scripts/jbh/ $home/scripts/
-rsync -auv $path/scripts/git/gitUpdate.sh $home/Documents/gitSave/update.sh 
-rsync -auv $path/scripts/git/gitSync.sh $home/Documents/gitSave/sync.sh 
-rsync -auv $path/scripts/git/gitLoad.sh $home/Documents/gitSave/load.sh
+rsync -auv $path/scripts/jbh/gitSync.sh $home/scripts/
+rsync -auv $path/scripts/git/update.sh $home/Documents/gitSave/ 
+rsync -auv $path/scripts/git/sync.sh $home/Documents/gitSave/ 
+rsync -auv $path/scripts/git/load.sh $home/Documents/gitSave/
+
+#######################
+# SYM LINK TO SCRIPTS #
+#######################
+cd $home/bin/
+ln -sf ../scripts/gitSync.sh gitSync
 
