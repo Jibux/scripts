@@ -10,6 +10,9 @@ sudo sh -c "echo '\ndeb http://backports.debian.org/debian-backports squeeze-bac
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c "echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google.list"
 
+echo "Install debian-multimedia-keyring..."
+sudo apt-get --force-yes --yes install debian-multimedia-keyring
+
 echo "Updating..."
 sudo aptitude update
 # INSTALL ALL REQUIRED PACKAGES
