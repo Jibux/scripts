@@ -6,7 +6,7 @@ echo "Installing sudo..."
 
 echo "Configuring sources.list"
 sudo perl -pi -e 's/main/main contrib non-free/g' /etc/apt/sources.list
-sudo sh -c "echo '\ndeb http://backports.debian.org/debian-backports squeeze-backports main contrib non-free' >> /etc/apt/sources.list"
+sudo sh -c "echo '\ndeb http://backports.debian.org/debian-backports squeeze-backports main contrib non-free\n\n# Debian Multimedia (unofficial): Debian 6.0 (Squeeze)\ndeb http://www.debian-multimedia.org squeeze main non-free' >> /etc/apt/sources.list"
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c "echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google.list"
 
