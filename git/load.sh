@@ -44,7 +44,7 @@ rsync -auv $path/config/.fluxbox/startup $home/.fluxbox/
 #rsync -auv $path/config/.fluxbox/overlay $home/.fluxbox/
 rsync -auv $path/config/.bashrc $home/
 sudo cp /root/.bashrc /root/.bashrc.old
-rsync -uv $path/config/.bashrc /root/
+sudo rsync -uv $path/config/.bashrc /root/
 #rsync -auv $path/config/.bash_profile $home/
 mkdir -p $home/.local/share/applications
 rsync -auv $path/config/.local/share/applications/defaults.list $home/.local/share/applications/
