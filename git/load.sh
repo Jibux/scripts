@@ -28,7 +28,7 @@ fi
 #########################
 # BACKUP ORIGINAL FILES #
 #########################
-for file in $home/.bashrc $home/.fluxbox/keys $home/.fluxbox/startup /etc/bash.bashrc $vimPath /etc/screenrc
+for file in $home/.bashrc $home/.fluxbox/keys $home/.fluxbox/startup $home/.moc/config /etc/bash.bashrc $vimPath /etc/screenrc
 do
 	[[ -f "$file" && ! -f "$file.old" ]] && sudo rsync -a "$file" "$file.old"
 done
@@ -42,8 +42,9 @@ rsync -auv $path/config/.xinitrc $home/
 rsync -auv $path/config/.fluxbox/keys $home/.fluxbox/
 rsync -auv $path/config/.fluxbox/startup $home/.fluxbox/
 #rsync -auv $path/config/.fluxbox/overlay $home/.fluxbox/
+rsync -auv $path/config/.moc/config $home/.moc/
 rsync -auv $path/config/.bashrc $home/
-sudo cp /root/.bashrc /root/.bashrc.old
+[[ -f " /root/.bashrc" && ! -f "/root/.bashrc.old" ]] && sudo cp /root/.bashrc /root/.bashrc.old
 sudo rsync -uv $path/config/.bashrc /root/
 #rsync -auv $path/config/.bash_profile $home/
 mkdir -p $home/.local/share/applications
@@ -55,6 +56,7 @@ sudo rsync -uv $path/config/etc/bash.bashrc /etc/
 sudo rsync -uv $path/config/etc/DIR_COLORS /etc/
 sudo rsync -uv $path/config/etc/vimrc $vimPath
 sudo rsync -uv $path/config/etc/screenrc /etc/
+sudo rsync -uv $path/config/etc/slim.conf /etc/
 #sudo rsync -uv $path/config/etc/rc.d/*custom /etc/rc.d/
 #sudo rsync -uv $path/config/etc/rc.conf /etc/
 sudo rsync -uv $path/config/etc/udev/rules.d/11-media-by-label-auto-mount.rules /etc/udev/rules.d/
