@@ -18,7 +18,8 @@ sudo aptitude update
 # INSTALL ALL REQUIRED PACKAGES
 echo "Installing packages..."
 sudo apt-get --force-yes --yes install git screen ssh-askpass
-sudo apt-get --force-yes --yes install xorg fluxbox slim rxvt-unicode xdg-utils vim-gtk alsa-utils moc moc-ffmpeg-plugin network-manager libgconf2-4 libxss1 libcurl3 keychain flashplugin-nonfree google-chrome-stable myspell-fr-gut >> ~/install.log && sudo aptitude -y -t squeeze-backports install iceweasel-l10n-fr icedove-l10n-fr >> ~/install.log &
+sudo apt-get --force-yes --yes install xorg fluxbox slim rxvt-unicode xdg-utils vim-gtk alsa-utils moc moc-ffmpeg-plugin network-manager libgconf2-4 libxss1 libcurl3 keychain flashplugin-nonfree google-chrome-stable myspell-fr-gut
+sudo aptitude -y -t squeeze-backports install iceweasel-l10n-fr icedove-l10n-fr libreoffice-l10n-fr >> ~/install.log &
 
 # PREPARE DIRECTORIES
 echo "Preparing directories..."
