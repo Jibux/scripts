@@ -73,6 +73,8 @@ rsync -auv $path/scripts/jbh/gitSync.sh $home/scripts/
 rsync -auv $path/scripts/git/update.sh $home/Documents/gitSave/ 
 rsync -auv $path/scripts/git/sync.sh $home/Documents/gitSave/ 
 rsync -auv $path/scripts/git/load.sh $home/Documents/gitSave/
+rsync -auv $path/scripts/git/fetch.sh $home/Documents/gitSave/
+rsync -auv $path/scripts/git/install.sh $home/Documents/gitSave/
 
 #######################
 # SYM LINK TO SCRIPTS #
