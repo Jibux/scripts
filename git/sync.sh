@@ -10,7 +10,3 @@ cd $path/scripts
 git commit -m "update scripts" ./
 gitSync
 
-cd $path/Development
-git commit -m "update code" ./
-gitSync
-
