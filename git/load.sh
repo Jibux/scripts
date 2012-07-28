@@ -30,7 +30,7 @@ fi
 #########################
 for file in $home/.bashrc $home/.fluxbox/keys $home/.fluxbox/startup $home/.moc/config /etc/bash.bashrc $vimPath /etc/screenrc
 do
-	[[ -f "$file" && ! -f "$file.old" ]] && sudo rsync -a "$file" "$file.old"
+	[[ -f "$file" && ! -f "$file.dist" ]] && sudo rsync -a "$file" "$file.dist"
 done
 
 ###########
@@ -44,7 +44,7 @@ rsync -auv $path/config/.fluxbox/startup $home/.fluxbox/
 #rsync -auv $path/config/.fluxbox/overlay $home/.fluxbox/
 rsync -auv $path/config/.moc/config $home/.moc/
 rsync -auv $path/config/.bashrc $home/
-[[ -f " /root/.bashrc" && ! -f "/root/.bashrc.old" ]] && sudo cp /root/.bashrc /root/.bashrc.old
+[[ -f " /root/.bashrc" && ! -f "/root/.bashrc.dist" ]] && sudo cp /root/.bashrc /root/.bashrc.dist
 sudo rsync -uv $path/config/.bashrc /root/
 #rsync -auv $path/config/.bash_profile $home/
 mkdir -p $home/.local/share/applications
