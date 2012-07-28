@@ -1,7 +1,7 @@
 #!/bin/bash
 
 devDirectory="/home/jbh/Documents/Development"
-saveDirectory="/mnt/data/JBH/Informatique/Unix"
+saveDirectory="/mnt/data/JBH/Informatique/Unix/Developement"
 
 rsync -auv $devDirectory/TOSAVE $saveDirectory/
 cd $devDirectory
