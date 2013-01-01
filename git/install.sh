@@ -33,8 +33,6 @@ echo "Setup git..."
 git config --global user.name "Jibux"
 git config --global user.email jeanb.hugon@gmail.com
 
-cd ~/Documents/gitSave
-mkdir config
 cd ~/Documents/gitSave/
 git clone https://github.com/Jibux/scripts.git
 cd scripts
@@ -42,9 +40,9 @@ git remote add upstream https://github.com/Jibux/scripts.git
 git fetch upstream
 git merge upstream/master
 git remote add origin git@github.com:Jibux/scripts.git
-cd ~/Documents/gitSave/config
-git init
-git clone https://github.com/Jibux/scripts.git
+cd ~/Documents/gitSave/
+git clone https://github.com/Jibux/config.git
+cd config
 git remote add upstream https://github.com/Jibux/config.git
 git fetch upstream
 git merge upstream/master
