@@ -8,8 +8,8 @@ BEGIN_MSG="Sauvegarde commencée le $(date)"
 echo "$BEGIN_MSG" > $LOG
 echo "$BEGIN_MSG" > $ERR_LOG
 
-SOURCE="/mnt2/DONNEES/Fichiers"
-DESTINATION="/mnt/nas_agathe"
+SOURCE="/mnt/DONNEES/Fichiers"
+DESTINATION="/mnt2/nas_agathe"
 
 rsync -a --delete --progress $SOURCE $DESTINATION/ 2>>$ERR_LOG | tee --append $LOG | zenity --text="Sauvegarde en cours..." --progress --pulsate --auto-kill --auto-close
 
