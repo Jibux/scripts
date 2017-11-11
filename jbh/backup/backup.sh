@@ -11,7 +11,7 @@ function checkExistence {
 		if [ ! -d "$pathToTest" ]
 		then
 			echo "$pathToTest is not a directory or doesn't exist"
-			exit
+			exit 2
 		fi
 	fi
 
@@ -20,7 +20,7 @@ function checkExistence {
 		if [ ! -f "$pathToTest" ]
 		then
 			echo "$pathToTest is not a valid file or doesn't exist"
-			exit
+			exit 2
 		fi
 	fi
 
@@ -29,24 +29,24 @@ function checkExistence {
 		if [ ! -e "$pathToTest" ]
 		then
 			echo "the path $pathToTest doesn't exist"
-			exit
+			exit 2
 		fi
 	fi
 }
 
 function helpBackup {
 	echo "Coming soon..."
-	exit
+	exit 0
 }
 
 function usage {
 	echo "Usage: $progName [-hvfcF] [-i include file] [-e [exclude file]] [backup folder]"
 	echo "Try « $progName » --help, for more informations."
-	exit
+	exit 0
 }
 
 initPath="/home/jbh/scripts/backup"
-logPath="$initPath/log"
+logPath="$initPath/logs"
 backupLog="$logPath/backup.log"
 errorLog="$logPath/error.log"
 
@@ -80,7 +80,7 @@ do
 		-i) includeFile="$2"; shift 2;;
 		-e) exclude=1;excludeFile="$2";shift 2;;
 		--) shift;break;;
-		*) exit;;
+		*) exit 1;;
 	esac
 done
 
@@ -117,9 +117,10 @@ fi
 checkExistence "$path" 0
 checkExistence "$includeFile" 1
 checkExistence "$excludeFile" 1
+mkdir -p "$logPath"
 checkExistence "$logPath" 0
 
-command=""
+rsyncCommand=""
 and=""
 excludeParam=""
 ntfsParam=""
@@ -150,14 +151,14 @@ do
 	
 	cmd=$cmd2"rsync -uva --progress --delete$ntfsParam$excludeParam '$pathToSave' '$path$destinationPath'"
 	echo "$cmd"
-	command=$command$and$cmd
-	command=$command" 2>>$errorLog 1>>$backupLog"
+	rsyncCommand=$rsyncCommand$and$cmd
+	rsyncCommand=$rsyncCommand" 2>>$errorLog 1>>$backupLog"
 	and=" && "
 done < "$includeFile"
 
 if [ $debug -eq 1 ]
 then
-	echo -e "\n\n"$command"\n"
+	echo -e "\n\n"$rsyncCommand"\n"
 fi
 
 if [ $forceyes -eq 0 ]
@@ -171,7 +172,7 @@ fi
 if [ "$response" != "y" ]
 then
 	echo "Abort"
-	exit
+	exit 0
 fi
 
 
@@ -187,7 +188,7 @@ else
 	echo -e "$msg" > "$errorLog"
 fi
 
-eval $command
+eval $rsyncCommand
 
 date=`date`
 msg="\nBackup finished --- $date ---\n"
