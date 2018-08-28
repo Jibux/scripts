@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-ROOT=/opt/scripts/trim
+ROOT=${0%/*}
 LAST_TRIM_TIME_FILE=$ROOT/LAST_TRIM_TIME
 
 if [ ! -f "$LAST_TRIM_TIME_FILE" ]; then
