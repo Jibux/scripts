@@ -45,7 +45,7 @@ function usage {
 	exit 0
 }
 
-initPath="/home/jbh/scripts/backup"
+initPath="/home/jbh/scripts/global/backup"
 logPath="$initPath/logs"
 backupLog="$logPath/backup.log"
 errorLog="$logPath/error.log"

@@ -1,5 +1,7 @@
 #!/bin/bash
 
 
-/home/jbh/scripts/backup/backup.sh -vfFc /home/jbh/scripts/backup/backup_nas_family/
+ROOT_PATH=/home/jbh/scripts/global/backup
+
+$ROOT_PATH/backup.sh -vfFc $ROOT_PATH/backup_nas_family/
 
