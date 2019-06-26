@@ -1,0 +1,11 @@
+# The config file should be named "config.local"
+# The lines should be like this:
+# PATTERN|||/path/where/to/store/document/...
+# Example below
+
+# Move all files that are matching with releve_0546564650_[0-9]+.pdf to /path/where/to/store/document/path
+(releve|RCE)_0516574650_[0-9]+.pdf|||/path/where/to/store/document/path
+# Move file-01012019.pdf to /path/where/to/store/document/path/2019/
+# The "$BASH_REMATCH[1]" variable will get the value of the match ([0-9]{4})
+# So for file-01012019.pdf, it will be "2019"
+file-[0-9]{4}([0-9]{4}).pdf|||/path/where/to/store/document/path/${BASH_REMATCH[1]}
