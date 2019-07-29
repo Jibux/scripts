@@ -16,7 +16,7 @@
 #
 
 
-SCRIPT_ROOT_PATH="$(dirname "$(realpath -s "$0")")"
+SCRIPT_ROOT_PATH="$(dirname "$(realpath "$0")")"
 CONFIG_FILE="$SCRIPT_ROOT_PATH/config.local"
 CONFIG_SEPARATOR="|||"
 
