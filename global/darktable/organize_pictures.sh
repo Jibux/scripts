@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -o errexit
+
+set -o errexit -o nounset
 
 fail()
 {
@@ -11,6 +12,16 @@ fail()
 usage()
 {
 	echo "$0 path_to_pictures"
+}
+
+remove_dir()
+{
+	local dirname=$1
+
+	if [ -z "$(ls -A "$dirname")" ]; then
+		echo "rmdir '$dirname'"
+		rmdir "$dirname"
+	fi
 }
 
 ROOT_RAW="/mnt/data/JBH/Darktable"
@@ -36,12 +47,11 @@ echo "mkdir '$PATH_JPG'"
 [ ! -d "$PATH_JPG" ] && mkdir -p "$PATH_JPG"
 
 echo "mv *RW2"
-find "$DIR_PATH" -maxdepth 1 -type f -name "*$RAW_EXT" -exec mv '{}' "$PATH_RAW" \;
+find "$DIR_PATH" -maxdepth 1 -type f -iname "*$RAW_EXT" -exec mv '{}' "$PATH_RAW" \;
 echo "mv *JPG"
-find "$DIR_PATH" -maxdepth 1 -type f -name "*$JPG_EXT" -exec mv '{}' "$PATH_JPG" \;
+find "$DIR_PATH" -maxdepth 1 -type f -iname "*$JPG_EXT" -exec mv '{}' "$PATH_JPG" \;
 
-if [ -z "$(ls -A "$DIR_PATH")" ]; then
-	echo "rmdir '$DIR_PATH'"
-	rmdir "$DIR_PATH"
-fi
+remove_dir "$DIR_PATH"
+remove_dir "$PATH_RAW"
+remove_dir "$PATH_JPG"
 
