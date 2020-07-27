@@ -16,6 +16,8 @@
 #
 
 
+set -o errexit -o nounset
+
 SCRIPT_ROOT_PATH="$(dirname "$(realpath "$0")")"
 CONFIG_FILE="$SCRIPT_ROOT_PATH/config.local"
 CONFIG_SEPARATOR="|||"
@@ -78,15 +80,20 @@ process_file()
 	local file_name
 	local destination
 	local destination_parent
+	local pattern
+	local destination_not_evaluated
+
 	[ ! -f "$file" ] && fail "'$file' does not exist!"
 	file_name="$(clean_path "$(basename "$file")")"
 	echo "Process '$file_name'"
 
 	while IFS= read -r line; do
 		[[ "$line" =~ ^# ]] && continue
-		local pattern=${line%$CONFIG_SEPARATOR*}
-		local destination_not_evaluated=${line#*$CONFIG_SEPARATOR}
-	
+		[[ -z "$line" ]] && continue
+
+		pattern=${line%$CONFIG_SEPARATOR*}
+		destination_not_evaluated=${line#*$CONFIG_SEPARATOR}
+
 		if [[ "$file_name" =~ $pattern ]]; then
 			destination="$(clean_path "$(eval echo "$destination_not_evaluated")")"
 			if [ -e "$destination" ]; then
