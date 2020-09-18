@@ -6,7 +6,7 @@ function checkExistence {
 	pathToTest=$1
 	typeOf=$2
 
-	if [ $typeOf -eq 0 ]
+	if [ "$typeOf" -eq "0" ]
 	then
 		if [ ! -d "$pathToTest" ]
 		then
@@ -15,7 +15,7 @@ function checkExistence {
 		fi
 	fi
 
-	if [ $typeOf -eq 1 ]
+	if [ "$typeOf" -eq "1" ]
 	then
 		if [ ! -f "$pathToTest" ]
 		then
@@ -24,7 +24,7 @@ function checkExistence {
 		fi
 	fi
 
-	if [ $typeOf -eq 2 ]
+	if [ "$typeOf" -eq "2" ]
 	then
 		if [ ! -e "$pathToTest" ]
 		then
@@ -60,7 +60,7 @@ includeFile="include.txt"
 excludeFile="exclude.txt"
 
 # Arguments testing
-TEMP=`getopt -n$0 -o hvfcFi:e: -l help,verbose -- "$@"`
+TEMP=$(getopt -n$0 -o hvfcFi:e: -l help,verbose -- "$@")
 
 if test $? != 0
 then
@@ -137,19 +137,19 @@ fi
 
 echo "Will do:"
 
-while read line
+while read -r line
 do
-	pathToSave=`echo $line | cut -d: -f1`
+	pathToSave=$(echo "$line" | cut -d: -f1)
 	pathToSave=$prefixPathToSave$pathToSave
-	destinationPath=`echo $line | cut -d: -f2`
+	destinationPath=$(echo "$line" | cut -d: -f2)
 	checkExistence "$pathToSave" 2
 	cmd2=""
 	if [ ! -d "$path$destinationPath" ]
 	then
 		cmd2="mkdir -p '$path$destinationPath' && "
 	fi
-	
-	cmd=$cmd2"rsync -uva --progress --delete$ntfsParam$excludeParam '$pathToSave' '$path$destinationPath'"
+
+	cmd=$cmd2"rsync -uvaL --progress --delete$ntfsParam$excludeParam '$pathToSave' '$path$destinationPath'"
 	echo "$cmd"
 	rsyncCommand=$rsyncCommand$and$cmd
 	rsyncCommand=$rsyncCommand" 2>>$errorLog 1>>$backupLog"
@@ -164,7 +164,7 @@ fi
 if [ $forceyes -eq 0 ]
 then
 	echo "Continue? (y,n)"
-	read response
+	read -r response
 else
 	response="y"
 fi
@@ -176,7 +176,7 @@ then
 fi
 
 
-date=`date`
+date=$(date)
 msg="Backup begun --- $date ---\n"
 
 if [ $conserveLastLog -eq 1 ]
@@ -188,9 +188,9 @@ else
 	echo -e "$msg" > "$errorLog"
 fi
 
-eval $rsyncCommand
+eval "$rsyncCommand"
 
-date=`date`
+date=$(date)
 msg="\nBackup finished --- $date ---\n"
 echo -e "$msg" >> "$backupLog"
 echo -e "$msg" >> "$errorLog"
