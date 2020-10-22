@@ -14,7 +14,7 @@ add_key()
 	if [ -z "$key_found" ]; then
 		read -r -n 1 -p "Add key '$key_path'? (Y/n) " resp
 		echo
-		[[ "$resp" =~ ^(y|Y|yes)$ ]] || return
+		[[ "$resp" =~ ^(n|N|no)$ ]] && return
 		ssh-add "$key_path"
 	else
 		echo "Key '$key_path' already added"
