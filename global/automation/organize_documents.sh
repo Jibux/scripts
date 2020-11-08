@@ -16,15 +16,21 @@
 #
 
 
-set -o errexit -o nounset
+set -o errexit -o nounset -o errtrace
 
 SCRIPT_ROOT_PATH="$(dirname "$(realpath "$0")")"
 CONFIG_FILE="$SCRIPT_ROOT_PATH/config.local"
 CONFIG_SEPARATOR="|||"
 
-MOVE=""
+ACTION_CMD=""
 CREATE_DIR=""
 EXISTING_FILES=""
+ACTION="move"
+
+generic_err()
+{
+	fail "Something went wrong, exiting..."
+}
 
 fail()
 {
@@ -34,7 +40,9 @@ fail()
 
 usage()
 {
-	echo "Usage: $0 list of directories"
+	echo "Usage: $0 [OPTIONS] list of directories"
+	echo
+	echo "-c (optional): use 'copy' instead of default 'move' action"
 	echo
 	echo "Example: $0 ~/Downloads/ /home/owncloud/"
 }
@@ -62,15 +70,18 @@ stack_command()
 {
 	[ -z "$2" ] && fail "stack_command() need 2 arguments"
 	case "$1" in
-		move)
-			MOVE="$MOVE""mv -f $2;"
-			;;
-		create_dir)
-			CREATE_DIR="$CREATE_DIR""mkdir -p '$2';"
-			;;
-		*)
-			fail "Unrecognized action '$1'"
-			;;
+	move)
+		ACTION_CMD="$ACTION_CMD""mv -f $2;"
+		;;
+	copy)
+		ACTION_CMD="$ACTION_CMD""cp -f $2;"
+		;;
+	create_dir)
+		CREATE_DIR="$CREATE_DIR""mkdir -p '$2';"
+		;;
+	*)
+		fail "Unrecognized action '$1'"
+		;;
 	esac
 }
 
@@ -108,14 +119,32 @@ process_file()
 					fail "Directory '$destination_parent' does not exist or is not writable!"
 				fi
 			fi
-			[ -f "$destination/$file_name" ] && EXISTING_FILES="$EXISTING_FILES""- $destination/$file_name\n"
-			stack_command "move" "'$file' '$destination/'"
+			[ -f "$destination/$file_name" ] && EXISTING_FILES="$EXISTING_FILES""- $destination/$file_name\\n"
+			stack_command "$ACTION" "'$file' '$destination/'"
 		fi
 
 	done < "$CONFIG_FILE"
 }
 
+trap generic_err ERR
+
 [ ! -f "$CONFIG_FILE" ] && fail "Config file '$CONFIG_FILE' not found!"
+
+optstring=":c"
+
+while getopts ${optstring} arg; do
+	case "${arg}" in
+	c)
+		ACTION="copy"
+		shift;;
+	:)
+		fail "$0: Must supply an argument to -$OPTARG";;
+	?)
+		fail "Invalid option: -$OPTARG"
+		usage
+		exit 1;;
+	esac
+done
 
 [ "$#" -lt "1" ] && usage && exit 1
 
@@ -125,7 +154,7 @@ done < <(find "$@" -maxdepth 1 -type f -print0)
 
 echo ""
 
-if [ -z "$MOVE" ]; then
+if [ -z "$ACTION_CMD" ]; then
 	echo -e "Nothing to do... exiting."
 	exit 0
 fi
@@ -135,9 +164,9 @@ if [ -n "$EXISTING_FILES" ]; then
 	echo -e "$EXISTING_FILES"
 fi
 
-echo -e "Will do:\n"
+echo -e "Will do:\\n"
 [ -n "$CREATE_DIR" ] && echo -e "${CREATE_DIR//;/\\n}"
-echo -e "${MOVE//;/\\n}"
+echo -e "${ACTION_CMD//;/\\n}"
 
 read -p"Proceed? (y/N) " response
 
@@ -146,7 +175,7 @@ if [[ ! "$response" =~ ^([yY]|yes|YES|Yes)$ ]]; then
 else
 	echo "Execute commands..."
 	eval "$CREATE_DIR"
-	eval "$MOVE"
+	eval "$ACTION_CMD"
 fi
 
 exit 0
