@@ -14,7 +14,7 @@ usage()
 	echo "$0 path_to_pictures"
 }
 
-remove_dir()
+remove_empty_dir()
 {
 	local dirname=$1
 
@@ -38,8 +38,9 @@ DIR_PATH=$1
 [ ! -d "$DIR_PATH" ] && fail "'$DIR_PATH' is not a directory or does not exist"
 
 DIR_NAME=$(basename "$DIR_PATH")
-PATH_RAW="$ROOT_RAW/$DIR_NAME"
-PATH_JPG="$ROOT_JPG/$DIR_NAME"
+YEAR=${DIR_NAME:0:4}
+PATH_RAW="$ROOT_RAW/$YEAR/$DIR_NAME"
+PATH_JPG="$ROOT_JPG/$YEAR/$DIR_NAME"
 
 echo "mkdir '$PATH_RAW'"
 [ ! -d "$PATH_RAW" ] && mkdir -p "$PATH_RAW"
@@ -51,7 +52,7 @@ find "$DIR_PATH" -maxdepth 1 -type f -iname "*$RAW_EXT" -exec mv '{}' "$PATH_RAW
 echo "mv *JPG"
 find "$DIR_PATH" -maxdepth 1 -type f -iname "*$JPG_EXT" -exec mv '{}' "$PATH_JPG" \;
 
-remove_dir "$DIR_PATH"
-remove_dir "$PATH_RAW"
-remove_dir "$PATH_JPG"
+remove_empty_dir "$DIR_PATH"
+remove_empty_dir "$PATH_RAW"
+remove_empty_dir "$PATH_JPG"
 

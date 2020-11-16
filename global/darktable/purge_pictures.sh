@@ -1,7 +1,8 @@
 #!/bin/bash
 
 
-function usage {
+usage()
+{
 	echo "Usage $0 <file type to purge> (raw or jpg)"
 }
 
@@ -28,7 +29,8 @@ function usage {
 #done
 
 
-check_picture() {
+check_picture()
+{
 	local file="$1"
 	local file_type="${file##*.}"
 	local file_type_to_search="JPG"
@@ -61,9 +63,9 @@ else
 fi
 
 echo "Will suppress $file_type_to_purge are you sure? (y/N)"
-read -n 1 response
+read -r -n 1 response
 [ "$response" != "y" ] && echo "Abort" && exit 0
-echo -e "\n"
+echo -e "\\n"
 
 find . -type f -name '*'$search_for -exec bash -c 'check_picture "$0"' {} \;
 
