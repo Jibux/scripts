@@ -120,6 +120,7 @@ for i in "$@"; do
 	case $i in
 		--ext=*)
 			EXT="${i#*=}"
+			EXT="${EXT,,}"
 			shift
 			;;
 		--fix)
@@ -142,14 +143,14 @@ done
 
 SEARCH_PATH="$1"
 
-PATTERN="%Y%m%d_%H%M%S%%-c.${EXT,,}"
+PATTERN="%Y%m%d_%H%M%S%%-c.$EXT"
 
 verbose && EXIFTOOL_OPTS=("-v")
 
 shopt -s nocasematch
 
 if [ "$EXT" == "xmp" ]; then
-	PATTERN="%Y%m%d_%H%M%S%%-c.rw2.${EXT,,}"
+	PATTERN="%Y%m%d_%H%M%S%%-c.rw2.$EXT"
 elif [[ "$EXT" =~ mp4|mov|mpg|mpeg ]]; then
 	TAG="CreateDate"
 fi
