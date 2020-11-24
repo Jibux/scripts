@@ -16,6 +16,17 @@ usage()
 	echo "'--fix' is optional it will try to fix exif -DateTimeOriginal and -CreateDate tags"
 }
 
+verbose()
+{
+	[ "$VERBOSE" == "yes" ]
+}
+
+debug()
+{
+	verbose && echo "$1"
+	return 0
+}
+
 find_date()
 {
 	local found_date
@@ -45,8 +56,8 @@ fix_xmp_tag()
 	else
 		rw2_file=${xmp_file%.*}
 		rw2_date="$(find_date "$rw2_file")"
-		echo "Will write date $rw2_date to '$xmp_file' exif tags"
-		exiftool -P -DateTimeOriginal="$rw2_date" -CreateDate="$rw2_date" -overwrite_original_in_place "$xmp_file"
+		debug "Will write date $rw2_date to '$xmp_file' exif tags"
+		exiftool "${EXIFTOOL_OPTS[@]}" -P -DateTimeOriginal="$rw2_date" -CreateDate="$rw2_date" -overwrite_original_in_place "$xmp_file"
 	fi
 }
 
@@ -67,14 +78,14 @@ fix_file_tag()
 	formated_date=${formated_date:0:11}
 	regex=".*$formated_date"'[0-9]{4}.*\.'"$EXT$"
 	if [[ -n "$found_date" && "$file_path" =~ $regex$ ]]; then
-		echo "File name '$file_path' matches with found date ($found_date)"
+		debug "File name '$file_path' matches with found date ($found_date)"
 	else
 		echo "File name '$file_path' does not match with found date ($found_date)"
 		read -r -n 1 -p 'Fix tags in this file? (y/N) ' resp
 		echo
 		if [[ "$resp" =~ [yY] ]]; then
 			echo "Fixing '$file_path'"
-			exiftool -P -r -d "$PATTERN" -ext "$EXT" "-CreateDate<filename" "-DateTimeOriginal<filename" -overwrite_original_in_place "$file_path"
+			exiftool "${EXIFTOOL_OPTS[@]}" -P -r -d "$PATTERN" -ext "$EXT" "-CreateDate<filename" "-DateTimeOriginal<filename" -overwrite_original_in_place "$file_path"
 		fi
 	fi
 
@@ -102,6 +113,8 @@ fix()
 TAG="DateTimeOriginal"
 FIX="no"
 EXT=""
+VERBOSE="no"
+EXIFTOOL_OPTS=()
 
 for i in "$@"; do
 	case $i in
@@ -111,6 +124,10 @@ for i in "$@"; do
 			;;
 		--fix)
 			FIX="yes"
+			shift
+			;;
+		--verbose)
+			VERBOSE="yes"
 			shift
 			;;
 		-*)
@@ -127,6 +144,8 @@ SEARCH_PATH="$1"
 
 PATTERN="%Y%m%d_%H%M%S%%-c.${EXT,,}"
 
+verbose && EXIFTOOL_OPTS=("-v")
+
 shopt -s nocasematch
 
 if [ "$EXT" == "xmp" ]; then
@@ -138,6 +157,6 @@ fi
 if [ "$FIX" == "yes" ]; then
 	fix
 else
-	exiftool -P "-filename<$TAG" -ext "$EXT" -d "$PATTERN" -r -overwrite_original_in_place "$SEARCH_PATH"
+	exiftool "${EXIFTOOL_OPTS[@]}" -P "-filename<$TAG" -ext "$EXT" -d "$PATTERN" -r -overwrite_original_in_place "$SEARCH_PATH"
 fi
 
