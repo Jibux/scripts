@@ -31,13 +31,17 @@ usage()
 
 check_picture()
 {
+	shopt -s nocasematch
+
 	local file="$1"
 	local file_type="${file##*.}"
 	local file_type_to_search="JPG"
+
 	[ "$file_type" == "JPG" ] && file_type_to_search="RW2"
 	local file_to_search="${file%.*}.$file_type_to_search"
+	local file_to_search2="${file%.*}.${file_type_to_search,,}"
 
-	if [ -f "$file_to_search" ]; then
+	if [[ -f "$file_to_search" || -f "$file_to_search2" ]]; then
 		echo "$file_to_search present"
 	else
 		echo "Will suppress $file"
@@ -67,5 +71,5 @@ read -r -n 1 response
 [ "$response" != "y" ] && echo "Abort" && exit 0
 echo -e "\\n"
 
-find . -type f -name '*'$search_for -exec bash -c 'check_picture "$0"' {} \;
+find . -type f -iname '*'$search_for -exec bash -c 'check_picture "$0"' {} \;
 
