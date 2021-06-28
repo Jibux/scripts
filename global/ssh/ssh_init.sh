@@ -23,5 +23,5 @@ add_key()
 
 while IFS= read -u 3 -r path; do
 	add_key "$path"
-done 3< <(find "$HOME/.ssh/" -type f -not -name '*.pub' -not -name '*known_hosts*' -not -name '*authorized_keys*' -not -name '*config*' | sort -u)
+done 3< <(find "$HOME/.ssh/" -type f -not -name '*.pub' -not -name '*known_hosts*' -not -name '*authorized_keys*' -not -name '*config*' -not -name '*conf' | sort -u)
 
