@@ -17,7 +17,10 @@ extension_regex_list = {
 
 
 def usage():
-    print(f'{sys.argv[0]} path1 path2 etc.')
+    print(f'Usage: {sys.argv[0]} [paths]')
+    print('paths (optional): path1 path2 etc.')
+    print('Paths will be retrieved either from command line or from doc_config.yaml.')
+    print('Configuration examples can be found in "doc_config_example.yaml".')
 
 def exit_usage():
     usage()
@@ -267,12 +270,17 @@ def do_actions(dir_list, items):
     for item in items:
         move_file(item)
 
+def expand_home_dir(path):
+    return os.path.expanduser(path)
+
+def get_paths(config):
+    paths = config['paths'] if 'paths' in config else []
+    # argv will overwrite paths written in config
+    final_paths = sys.argv[1:] if len(sys.argv) != 1 else paths
+    # For each path, replace '~' by user's home dir
+    return list(map(expand_home_dir, final_paths))
+
 def main():
-    paths = sys.argv[1:]
-    len(paths) == 0 and exit_usage()
-
-    print(f'Paths to process: {paths}')
-
     script_path = os.path.realpath(sys.argv[0])
     script_dir = os.path.dirname(script_path)
     config_path = '{}/{}'.format(script_dir, 'doc_config.yaml')
@@ -281,8 +289,14 @@ def main():
     with open(config_path, "r") as ymlfile:
         config = yaml.safe_load(ymlfile)
 
+    paths = get_paths(config)
+
+    if len(paths) == 0:
+        exit_usage()
+    print(f'Paths to process: {paths}')
+
     # Sum will flatten list
-    processed_list = sum(map(process_path(config), paths), [])
+    processed_list = sum(map(process_path(config['files_patterns']), paths), [])
 
     if len(processed_list) == 0:
         print('No action to perform')
