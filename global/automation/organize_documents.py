@@ -11,7 +11,7 @@ import shutil
 from functools import reduce
 
 
-extension_regex_list = {
+file_type_regex_list = {
   'pdf': r'.pdf'
 }
 
@@ -42,19 +42,18 @@ def ic_match(pattern):
     return ic_mstring
 
 def ext_regex_match(regex_key):
-    return ic_match(extension_regex_list[regex_key])
+    return ic_match(file_type_regex_list[regex_key])
 
-def get_extension(item_ext):
-    def find_in_extension_regex_list(regex_key):
+def get_file_type(item_ext):
+    def find_in_file_type_regex_list(regex_key):
         return ext_regex_match(regex_key)(item_ext)
-    extension = next(filter(find_in_extension_regex_list, extension_regex_list.keys()), None)
-    return extension
+    return next(filter(find_in_file_type_regex_list, file_type_regex_list.keys()), None)
 
-def match_ext_in_cfg(extension):
-    def compare_ext_with_cfg_item(cfg_item):
-        cfg_item_ext = cfg_item['file_type']
-        return cfg_item_ext == extension
-    return compare_ext_with_cfg_item
+def match_file_type_in_cfg(file_type):
+    def compare_file_type_with_cfg_item(cfg_item):
+        cfg_item_f_type = cfg_item['file_type']
+        return cfg_item_f_type == file_type
+    return compare_file_type_with_cfg_item
 
 def get_file_name_to_match(file_name):
     return [file_name]
@@ -204,18 +203,18 @@ def process_file(config):
         if not item.is_file():
             return None
         _, item_ext = os.path.splitext(item.path)
-        print(f'Process "{item.name}" "{item_ext}"')
-        extension = get_extension(item_ext)
-        if extension is None:
+        file_type = get_file_type(item_ext)
+        print(f'Process "{item.name}" ({file_type})')
+        if file_type is None:
             return None
-        # Seek the configuration matching this extension
-        cfg_with_ext = list(filter(match_ext_in_cfg(extension), config))
-        if cfg_with_ext == None:
+        # Seek the configuration matching this file_type
+        cfg_with_f_type = list(filter(match_file_type_in_cfg(file_type), config))
+        if cfg_with_f_type == None:
             return None
-        ret = process_cfg(item, 'file_name', cfg_with_ext)
+        ret = process_cfg(item, 'file_name', cfg_with_f_type)
         if ret != None:
             return ret
-        return process_cfg(item, 'read_file', cfg_with_ext)
+        return process_cfg(item, 'read_file', cfg_with_f_type)
     return f
 
 def process_path(config):
