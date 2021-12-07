@@ -3,7 +3,8 @@
 
 import pdftotext
 import sys
-import yaml
+from yaml import load
+from yaml import CSafeLoader as Loader
 import re
 import os
 import stat
@@ -286,7 +287,7 @@ def main():
 
     # Load config
     with open(config_path, "r") as ymlfile:
-        config = yaml.safe_load(ymlfile)
+        config = load(ymlfile, Loader=Loader)
 
     paths = get_paths(config)
 
