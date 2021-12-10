@@ -34,6 +34,9 @@ def exit_cfg_error(msg):
     error('CONFIG ERROR: {}'.format(msg))
     exit(1)
 
+def expand_home_dir(path):
+    return os.path.expanduser(path)
+
 def item_exists(item):
     return item is not None
 
@@ -194,7 +197,7 @@ def process_cfg(item, method, cfg):
     tmp_path = get_file_path_from_content(content_to_match, cfg_match_method)
     if tmp_path is None:
         return None
-    new_path = adjust_path(tmp_path, item.name)
+    new_path = adjust_path(expand_home_dir(tmp_path), item.name)
     if is_the_same_inode(new_path, item.path):
         return None
     return { 'file': item.path, 'new_path': new_path }
@@ -269,9 +272,6 @@ def do_actions(dir_list, items):
         create_dir(d)
     for item in items:
         move_file(item)
-
-def expand_home_dir(path):
-    return os.path.expanduser(path)
 
 def get_paths(config):
     paths = config['paths'] if 'paths' in config else []
