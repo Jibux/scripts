@@ -248,6 +248,7 @@ def display_info_move(item):
     print("Will move '{}' to '{}' ({})".format(item['file'], item['new_path'], info))
 
 def display_actions(dir_list, items):
+    print("")
     for d in dir_list:
         display_info_dir(d)
     if len(dir_list) > 0:
