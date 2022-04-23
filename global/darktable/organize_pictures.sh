@@ -29,6 +29,7 @@ ROOT_JPG="/mnt/data/Famille/Photos-Images"
 
 RAW_EXT="RW2"
 JPG_EXT="JPG"
+MOV_EXT="MP4"
 
 [ "$#" != "1" ] && usage && exit 1
 
@@ -47,10 +48,12 @@ echo "mkdir '$PATH_RAW'"
 echo "mkdir '$PATH_JPG'"
 [ ! -d "$PATH_JPG" ] && mkdir -p "$PATH_JPG"
 
-echo "mv *RW2"
+echo "mv *$RAW_EXT"
 find "$DIR_PATH" -maxdepth 1 -type f -iname "*$RAW_EXT" -exec mv '{}' "$PATH_RAW" \;
-echo "mv *JPG"
+echo "mv *$JPG_EXT"
 find "$DIR_PATH" -maxdepth 1 -type f -iname "*$JPG_EXT" -exec mv '{}' "$PATH_JPG" \;
+echo "mv *$MOV_EXT"
+find "$DIR_PATH" -maxdepth 1 -type f -iname "*$MOV_EXT" -exec mv '{}' "$PATH_JPG" \;
 
 remove_empty_dir "$DIR_PATH"
 remove_empty_dir "$PATH_RAW"
