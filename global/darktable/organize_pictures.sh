@@ -24,8 +24,8 @@ remove_empty_dir()
 	fi
 }
 
-ROOT_RAW="/mnt/data/JBH/Darktable"
-ROOT_JPG="/mnt/data/Famille/Photos-Images"
+ROOT_RAW="/data/JBH/Darktable"
+ROOT_JPG="/data/Famille/Photos-Images"
 
 RAW_EXT="RW2"
 JPG_EXT="JPG"

@@ -1,5 +1,5 @@
 #!/bin/bash
 
 
-/home/jbh/scripts/backup/backup.sh -vF /home/jbh/scripts/backup/restore_from_nas_family/
+/home/jibux/scripts/backup/backup.sh -vF /home/jibux/scripts/backup/restore_from_nas_family/
 

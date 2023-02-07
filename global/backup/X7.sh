@@ -1,3 +1,3 @@
 #!/bin/bash
 
-/home/jbh/scripts/global/backup/backup.sh -vfc /home/jbh/scripts/global/backup/X7/
+/home/jibux/scripts/global/backup/backup.sh -vfc /home/jibux/scripts/global/backup/X7/

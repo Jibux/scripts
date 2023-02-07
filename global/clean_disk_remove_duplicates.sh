@@ -6,8 +6,8 @@
 # Then move duplicate files into another directory.                   #
 #######################################################################
 
-FILE_PATH=/media/jbh/WD-JBH/RECUP/
-DOUBLES_PATH=/media/jbh/WD-JBH/RECUP_DOUBLES/
+FILE_PATH=/media/jibux/WD-JBH/RECUP/
+DOUBLES_PATH=/media/jibux/WD-JBH/RECUP_DOUBLES/
 
 cd ${FILE_PATH}
 
