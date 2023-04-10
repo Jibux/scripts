@@ -1,1 +1,2 @@
-/data/JBH/:
+/data/JBH/:JBH/
+/home/jibux/.thunderbird/r3a21pup.default-release/ImapMail/:Mails/
