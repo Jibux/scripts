@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-ROOT="/mnt/data/JBH/Darktable/"
+ROOT="/data/Photos-Images/Darktable/"
 PWD="$(pwd -P)"
 
 FOLDER="${PWD##*$ROOT}"
