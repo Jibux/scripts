@@ -124,6 +124,7 @@ rsyncCommand=""
 and=""
 excludeParam=""
 ntfsParam=""
+syncParam="a"
 
 if [ $exclude -eq 1 ]
 then
@@ -133,6 +134,7 @@ fi
 if [ $ntfs -eq 1 ]
 then
 	ntfsParam=" --modify-window=1 --size-only"
+	syncParam="rtD"
 fi
 
 echo "Will do:"
@@ -149,7 +151,7 @@ do
 		cmd2="mkdir -p '$path$destinationPath' && "
 	fi
 
-	cmd=$cmd2"rsync -uvaL --progress --ignore-errors --delete$ntfsParam$excludeParam '$pathToSave' '$path$destinationPath'"
+	cmd=$cmd2"rsync -uvL$syncParam --progress --ignore-errors --delete$ntfsParam$excludeParam '$pathToSave' '$path$destinationPath'"
 	echo "$cmd"
 	rsyncCommand=$rsyncCommand$and$cmd
 	rsyncCommand=$rsyncCommand" 2>>$errorLog 1>>$backupLog"
