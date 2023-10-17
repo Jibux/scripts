@@ -64,6 +64,9 @@ process_branch()
 	fi
 }
 
+git co "$(git defbr)"
+git pull
+
 while IFS= read -u 3 -r br; do
 	process_branch "$br"
 done 3< <(git branch | awk '{print $NF}')
