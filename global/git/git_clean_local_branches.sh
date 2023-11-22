@@ -56,7 +56,7 @@ process_branch()
 
 	echo -n "Check remote reference of branch '$branch': "
 
-	if git branch -r | grep -q -E "/$branch$"; then
+	if git branch -r | grep -q -E "origin/$branch$"; then
 		echo "PRESENT"
 	else
 		echo "ABSENT"
