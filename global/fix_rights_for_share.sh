@@ -29,7 +29,7 @@ GROUP_WRITE_MODE=""
 [ "$GROUP_MODE" == "rw" ] && GROUP_WRITE_MODE="w"
 
 
-chgrp -R parents "$DIR"
-chmod -R o=,u=rwX,"g=rX$GROUP_WRITE_MODE" "$DIR"
-find "$DIR" -type d -exec chmod g+s {} \; -exec setfacl -m d:g::rx$GROUP_WRITE_MODE {} \;
+sudo chgrp -R parents "$DIR"
+sudo chmod -R o=,u=rwX,"g=rX$GROUP_WRITE_MODE" "$DIR"
+sudo find "$DIR" -type d -exec chmod g+s {} \; -exec setfacl -m d:g::rx$GROUP_WRITE_MODE {} \;
 
