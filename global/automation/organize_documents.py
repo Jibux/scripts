@@ -1,4 +1,13 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+
+
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#   "pdftotext",
+#   "PyYAML"
+# ]
+# ///
 
 
 import pdftotext
@@ -213,10 +222,10 @@ def process_file(config):
             return None
         # Seek the configuration matching this file_type
         cfg_with_f_type = list(filter(match_file_type_in_cfg(file_type), config))
-        if cfg_with_f_type == None:
+        if cfg_with_f_type is None:
             return None
         ret = process_cfg(item, 'file_name', cfg_with_f_type)
-        if ret != None:
+        if ret is not None:
             return ret
         return process_cfg(item, 'read_file', cfg_with_f_type)
     return f
